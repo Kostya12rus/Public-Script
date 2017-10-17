@@ -1,4 +1,4 @@
---Author: Kostya12rus
+п»ї--Author: Kostya12rus
 local ZChatWar = {}
 ZChatWar.Font = Renderer.LoadFont("Tahoma", 20, Enum.FontWeight.EXTRABOLD)
 ZChatWar.optionEnable = Menu.AddOption({"Kostya12rus","Chat War"}, "Activate", "")
@@ -58,7 +58,7 @@ function ZChatWar.OnUpdate()
 					for iteamconsole,nameitem in pairs(ItemNameTable) do
 						if iteamname == iteamconsole then
 							if itemrecept then
-								CourTable[ItemKey] = CourTable[ItemKey] ..", рецепт ".. nameitem
+								CourTable[ItemKey] = CourTable[ItemKey] ..", СЂРµС†РµРїС‚ ".. nameitem
 								itemrecept = false
 							else
 								CourTable[ItemKey] = CourTable[ItemKey] ..", ".. nameitem
@@ -78,69 +78,69 @@ function ZChatWar.OnUpdate()
 				if CourTable[MyTeamCuer] then
 					if CourTable[DeadValue] == 1 then
 						if CourTable[ItemTrig] then
-----------------[[Твоя кура умерла с вещами]]---------------------
-							Engine.ExecuteCommand("say Зачем вы убили куру? Там были" .. CourTable[ItemKey])
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё]]---------------------
+							Engine.ExecuteCommand("say Р—Р°С‡РµРј РІС‹ СѓР±РёР»Рё РєСѓСЂСѓ? РўР°Рј Р±С‹Р»Рё" .. CourTable[ItemKey])
 						else
-----------------[[Твоя кура умерла]]---------------------
-							Engine.ExecuteCommand("say Мне кажестся или мы проебали куру?")
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р°]]---------------------
+							Engine.ExecuteCommand("say РњРЅРµ РєР°Р¶РµСЃС‚СЃСЏ РёР»Рё РјС‹ РїСЂРѕРµР±Р°Р»Рё РєСѓСЂСѓ?")
 						end
 					elseif CourTable[DeadValue] == 2 then
 						if CourTable[ItemTrig] then
-----------------[[Твоя кура умерла с вещами 2 раз]]---------------------
-							Engine.ExecuteCommand("say Сново кура умерла с нашими шмотками" .. CourTable[ItemKey])
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 2 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РЎРЅРѕРІРѕ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РЅР°С€РёРјРё С€РјРѕС‚РєР°РјРё" .. CourTable[ItemKey])
 						else
-----------------[[Твоя кура умерла 2 раз]]---------------------
-							Engine.ExecuteCommand("say Как у нас так получаеться проебывать куру?")
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° 2 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РљР°Рє Сѓ РЅР°СЃ С‚Р°Рє РїРѕР»СѓС‡Р°РµС‚СЊСЃСЏ РїСЂРѕРµР±С‹РІР°С‚СЊ РєСѓСЂСѓ?")
 						end
 					elseif CourTable[DeadValue] == 3 then
 						if CourTable[ItemTrig] then
-----------------[[Твоя кура умерла с вещами 3 раз]]---------------------
-							Engine.ExecuteCommand("say Он сливает куру когда она несет" .. CourTable[ItemKey])
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 3 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РћРЅ СЃР»РёРІР°РµС‚ РєСѓСЂСѓ РєРѕРіРґР° РѕРЅР° РЅРµСЃРµС‚" .. CourTable[ItemKey])
 						else
-----------------[[Твоя кура умерла 3 раз]]---------------------
-							Engine.ExecuteCommand("say Кажеться пора кидать репорт, он ещё раз слил куру")
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° 3 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РљР°Р¶РµС‚СЊСЃСЏ РїРѕСЂР° РєРёРґР°С‚СЊ СЂРµРїРѕСЂС‚, РѕРЅ РµС‰С‘ СЂР°Р· СЃР»РёР» РєСѓСЂСѓ")
 						end
 					elseif CourTable[DeadValue] >= 4 then
 						if CourTable[ItemTrig] then
-----------------[[Твоя кура умерла с вещами 4 раз]]---------------------
-							Engine.ExecuteCommand("say Пиздец.. В куре были" .. CourTable[ItemKey])
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 4 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РџРёР·РґРµС†.. Р’ РєСѓСЂРµ Р±С‹Р»Рё" .. CourTable[ItemKey])
 						else
-----------------[[Твоя кура умерла 4 раз]]---------------------
-							Engine.ExecuteCommand("say Блять, этот далбоеб просто фидит курами, репорт")
+----------------[[РўРІРѕСЏ РєСѓСЂР° СѓРјРµСЂР»Р° 4 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say Р‘Р»СЏС‚СЊ, СЌС‚РѕС‚ РґР°Р»Р±РѕРµР± РїСЂРѕСЃС‚Рѕ С„РёРґРёС‚ РєСѓСЂР°РјРё, СЂРµРїРѕСЂС‚")
 						end
 					end
 				else
 					if CourTable[DeadValue] == 1 then
 						if CourTable[ItemTrig] then
-----------------[[Вражеская кура умерла с вещами]]---------------------
-							Engine.ExecuteCommand("say Кажеться кура умерла и кто то потерял" .. CourTable[ItemKey])
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё]]---------------------
+							Engine.ExecuteCommand("say РљР°Р¶РµС‚СЊСЃСЏ РєСѓСЂР° СѓРјРµСЂР»Р° Рё РєС‚Рѕ С‚Рѕ РїРѕС‚РµСЂСЏР»" .. CourTable[ItemKey])
 						else
-----------------[[Вражеская кура умерла]]---------------------
-							Engine.ExecuteCommand("say Научитесь управлять курой")
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р°]]---------------------
+							Engine.ExecuteCommand("say РќР°СѓС‡РёС‚РµСЃСЊ СѓРїСЂР°РІР»СЏС‚СЊ РєСѓСЂРѕР№")
 						end
 					elseif CourTable[DeadValue] == 2 then
 						if CourTable[ItemTrig] then
-----------------[[Вражеская кура умерла с вещами 2 раз]]---------------------
-							Engine.ExecuteCommand("say Ваша кура умерла с" .. CourTable[ItemKey])
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 2 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say Р’Р°С€Р° РєСѓСЂР° СѓРјРµСЂР»Р° СЃ" .. CourTable[ItemKey])
 						else
-----------------[[Вражеская кура умерла 2 раз]]---------------------
-							Engine.ExecuteCommand("say Вы заметили, что у вас кура сдохла?")
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° 2 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say Р’С‹ Р·Р°РјРµС‚РёР»Рё, С‡С‚Рѕ Сѓ РІР°СЃ РєСѓСЂР° СЃРґРѕС…Р»Р°?")
 						end
 					elseif CourTable[DeadValue] == 3 then
 						if CourTable[ItemTrig] then
-----------------[[Вражеская кура умерла с вещами 3 раз]]---------------------
-							Engine.ExecuteCommand("say Кура не донесла" .. CourTable[ItemKey])
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 3 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РљСѓСЂР° РЅРµ РґРѕРЅРµСЃР»Р°" .. CourTable[ItemKey])
 						else
-----------------[[Вражеская кура умерла 3 раз]]---------------------
-							Engine.ExecuteCommand("say Скажите куре 'пока на 3 минуты'")
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° 3 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say РЎРєР°Р¶РёС‚Рµ РєСѓСЂРµ 'РїРѕРєР° РЅР° 3 РјРёРЅСѓС‚С‹'")
 						end
 					elseif CourTable[DeadValue] >= 4 then
 						if CourTable[ItemTrig] then
-----------------[[Вражеская кура умерла с вещами 4 раз]]---------------------
-							Engine.ExecuteCommand("say Вы что фидить начали? Хоть выложите" .. CourTable[ItemKey])
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° СЃ РІРµС‰Р°РјРё 4 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say Р’С‹ С‡С‚Рѕ С„РёРґРёС‚СЊ РЅР°С‡Р°Р»Рё? РҐРѕС‚СЊ РІС‹Р»РѕР¶РёС‚Рµ" .. CourTable[ItemKey])
 						else
-----------------[[Вражеская кура умерла 4 раз]]---------------------
-							Engine.ExecuteCommand("say Ещё больше курьеров ... ")
+----------------[[Р’СЂР°Р¶РµСЃРєР°СЏ РєСѓСЂР° СѓРјРµСЂР»Р° 4 СЂР°Р·]]---------------------
+							Engine.ExecuteCommand("say Р•С‰С‘ Р±РѕР»СЊС€Рµ РєСѓСЂСЊРµСЂРѕРІ ... ")
 						end
 					end
 				end
@@ -158,87 +158,87 @@ function ZChatWar.OnChatEvent(chatEvent)
 	InfoPlayer_5 = chatEvent.players[5]
 	if chatEvent.type == 5 then	
 		if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
-----------------[[Твой герой делает фб]]---------------------
-			Engine.ExecuteCommand("say Да я охуеннен, это бионгодлайк, мне лайк, бомж "..HeroDataInfo[InfoPlayer_2][NickKey])
+----------------[[РўРІРѕР№ РіРµСЂРѕР№ РґРµР»Р°РµС‚ С„Р±]]---------------------
+			Engine.ExecuteCommand("say Р”Р° СЏ РѕС…СѓРµРЅРЅРµРЅ, СЌС‚Рѕ Р±РёРѕРЅРіРѕРґР»Р°Р№Рє, РјРЅРµ Р»Р°Р№Рє, Р±РѕРјР¶ "..HeroDataInfo[InfoPlayer_2][NickKey])
 		end
 		if HeroDataInfo[InfoPlayer_2][NickKey] == Player.GetName(Players.GetLocal()) then
-----------------[[Твой герой умирает на ФБ]]---------------------
-			Engine.ExecuteCommand("say Ну вообще пиздато ноль хелпы. "..HeroDataInfo[InfoPlayer_1][NickKey]..", ты вообще черт ебучий")
+----------------[[РўРІРѕР№ РіРµСЂРѕР№ СѓРјРёСЂР°РµС‚ РЅР° Р¤Р‘]]---------------------
+			Engine.ExecuteCommand("say РќСѓ РІРѕРѕР±С‰Рµ РїРёР·РґР°С‚Рѕ РЅРѕР»СЊ С…РµР»РїС‹. "..HeroDataInfo[InfoPlayer_1][NickKey]..", С‚С‹ РІРѕРѕР±С‰Рµ С‡РµСЂС‚ РµР±СѓС‡РёР№")
 		end
 		if HeroDataInfo[InfoPlayer_2][NickKey] ~= Player.GetName(Players.GetLocal()) and HeroDataInfo[InfoPlayer_1][NickKey] ~= Player.GetName(Players.GetLocal()) then
 			if not HeroDataInfo[InfoPlayer_1][TeamKey] then
-----------------[[Союзник умер на ФБ]]---------------------
-				Engine.ExecuteCommand("say Ой "..HeroDataInfo[InfoPlayer_2][NickKey].." даун. Давайте его зарепортим, чтобы он больше ФБ не отдавал!!!")
+----------------[[РЎРѕСЋР·РЅРёРє СѓРјРµСЂ РЅР° Р¤Р‘]]---------------------
+				Engine.ExecuteCommand("say РћР№ "..HeroDataInfo[InfoPlayer_2][NickKey].." РґР°СѓРЅ. Р”Р°РІР°Р№С‚Рµ РµРіРѕ Р·Р°СЂРµРїРѕСЂС‚РёРј, С‡С‚РѕР±С‹ РѕРЅ Р±РѕР»СЊС€Рµ Р¤Р‘ РЅРµ РѕС‚РґР°РІР°Р»!!!")
 			else
-----------------[[Твой союзник делает фб]]---------------------
-				Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey].." красава, пиздато ссыграл")
+----------------[[РўРІРѕР№ СЃРѕСЋР·РЅРёРє РґРµР»Р°РµС‚ С„Р±]]---------------------
+				Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey].." РєСЂР°СЃР°РІР°, РїРёР·РґР°С‚Рѕ СЃСЃС‹РіСЂР°Р»")
 			end
 		end
 	end	
 	if chatEvent.type == 6 then
 		if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
 			if InfoPlayer_3 == 2 then
-----------------[[Ты сделал дабл килл]]---------------------
-				Chat.Say(AllChat,HeroDataInfo[InfoPlayer_4][NickKey].." его вырубил , другого для прикола вырубил")
+----------------[[РўС‹ СЃРґРµР»Р°Р» РґР°Р±Р» РєРёР»Р»]]---------------------
+				Chat.Say(AllChat,HeroDataInfo[InfoPlayer_4][NickKey].." РµРіРѕ РІС‹СЂСѓР±РёР» , РґСЂСѓРіРѕРіРѕ РґР»СЏ РїСЂРёРєРѕР»Р° РІС‹СЂСѓР±РёР»")
 			end
 			if InfoPlayer_3 == 3 then
-----------------[[Твой триплкилл]]---------------------
-				Chat.Say(AllChat,"ЕЕЕЕ BOY, да я просто кибер катлет")
+----------------[[РўРІРѕР№ С‚СЂРёРїР»РєРёР»Р»]]---------------------
+				Chat.Say(AllChat,"Р•Р•Р•Р• BOY, РґР° СЏ РїСЂРѕСЃС‚Рѕ РєРёР±РµСЂ РєР°С‚Р»РµС‚")
 			end
 			if InfoPlayer_3 == 4 then
-----------------[[Твой ультра килл]]---------------------
-				Chat.Say(AllChat,"Сосочки затвердели, давайте рампагу")
+----------------[[РўРІРѕР№ СѓР»СЊС‚СЂР° РєРёР»Р»]]---------------------
+				Chat.Say(AllChat,"РЎРѕСЃРѕС‡РєРё Р·Р°С‚РІРµСЂРґРµР»Рё, РґР°РІР°Р№С‚Рµ СЂР°РјРїР°РіСѓ")
 			end
 			if InfoPlayer_3 == 5 then
-----------------[[Твоя рампага]]---------------------
-				Chat.Say(AllChat,"Просто в нулину вас вынес, никчемные, труха")
+----------------[[РўРІРѕСЏ СЂР°РјРїР°РіР°]]---------------------
+				Chat.Say(AllChat,"РџСЂРѕСЃС‚Рѕ РІ РЅСѓР»РёРЅСѓ РІР°СЃ РІС‹РЅРµСЃ, РЅРёРєС‡РµРјРЅС‹Рµ, С‚СЂСѓС…Р°")
 			end
 			if InfoPlayer_3 > 5 then
-----------------[[Продолжение рампаги]]---------------------
-				Chat.Say(AllChat,"Давайте ещё больше, а то "..InfoPlayer_3.." киллов, это очень мало")
+----------------[[РџСЂРѕРґРѕР»Р¶РµРЅРёРµ СЂР°РјРїР°РіРё]]---------------------
+				Chat.Say(AllChat,"Р”Р°РІР°Р№С‚Рµ РµС‰С‘ Р±РѕР»СЊС€Рµ, Р° С‚Рѕ "..InfoPlayer_3.." РєРёР»Р»РѕРІ, СЌС‚Рѕ РѕС‡РµРЅСЊ РјР°Р»Рѕ")
 			end
 		else
 			if HeroDataInfo[InfoPlayer_1][TeamKey] then
 				if InfoPlayer_3 == 2 then
-----------------[[Союзник делает Дабл Килл]]---------------------
-					Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
+----------------[[РЎРѕСЋР·РЅРёРє РґРµР»Р°РµС‚ Р”Р°Р±Р» РљРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say РљСЂР°СЃР°РІС‡РёРє "..HeroDataInfo[InfoPlayer_1][NickKey]..", СЃРґРµР»Р°Р» Р”Р°Р±Р»РљРёР»")
 				end
 				if InfoPlayer_3 == 3 then
-----------------[[Союзник делает Трипл Килл]]---------------------
-					Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
+----------------[[РЎРѕСЋР·РЅРёРє РґРµР»Р°РµС‚ РўСЂРёРїР» РљРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say Р­С‚Рѕ С‚СЂРёРїР» РєРёР»Р» РІ РёСЃРїРѕР»РЅРµРЅРёРё "..HeroDataInfo[InfoPlayer_1][NickKey])
 				end
 				if InfoPlayer_3 == 4 then
-----------------[[Союзник делает Ультра килл]]---------------------
-					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
+----------------[[РЎРѕСЋР·РЅРёРє РґРµР»Р°РµС‚ РЈР»СЊС‚СЂР° РєРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", РѕРЅ РїСЂРёС€РµР» Р·Р° СЂР°РјРїР°РіРѕР№")
 				end
 				if InfoPlayer_3 == 5 then
-----------------[[Союзник делает Рампагу]]---------------------
-					Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
+----------------[[РЎРѕСЋР·РЅРёРє РґРµР»Р°РµС‚ Р Р°РјРїР°РіСѓ]]---------------------
+					Engine.ExecuteCommand("say Р­С‚Рѕ СЂР°РјРїР°РіР° РІ РёСЃРїРѕР»РЅРµРЅРёРё "..HeroDataInfo[InfoPlayer_1][NickKey].." РЅР° "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", РїСЂРѕСЃС‚Рѕ Р»Р°Р№Рє")
 				end
 				if InfoPlayer_3 > 5 then
-----------------[[Союзник убивает больше рампаги]]---------------------
-					Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
+----------------[[РЎРѕСЋР·РЅРёРє СѓР±РёРІР°РµС‚ Р±РѕР»СЊС€Рµ СЂР°РјРїР°РіРё]]---------------------
+					Engine.ExecuteCommand("say РћСЃС‚Р°РЅРѕРІРёС‚Рµ "..HeroDataInfo[InfoPlayer_1][NickKey]..", РѕРЅ РїСЂРѕСЃС‚Рѕ РµР±Р°РЅСѓС‚С‹Р№, СЃРґРµР»Р°Р» "..InfoPlayer_3.." РєРёР»РѕРІ РїРѕРґСЂСЏРґ")
 				end
 			else
 				if InfoPlayer_3 == 2 then
-----------------[[Враг делает Дабл Килл]]---------------------
-					Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
+----------------[[Р’СЂР°Рі РґРµР»Р°РµС‚ Р”Р°Р±Р» РљРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say РљСЂР°СЃР°РІС‡РёРє "..HeroDataInfo[InfoPlayer_1][NickKey]..", СЃРґРµР»Р°Р» Р”Р°Р±Р»РљРёР»")
 				end
 				if InfoPlayer_3 == 3 then
-----------------[[Враг делает Трипл Килл]]---------------------
-					Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
+----------------[[Р’СЂР°Рі РґРµР»Р°РµС‚ РўСЂРёРїР» РљРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say Р­С‚Рѕ С‚СЂРёРїР» РєРёР»Р» РІ РёСЃРїРѕР»РЅРµРЅРёРё "..HeroDataInfo[InfoPlayer_1][NickKey])
 				end
 				if InfoPlayer_3 == 4 then
-----------------[[Враг делает Ультра килл]]---------------------
-					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
+----------------[[Р’СЂР°Рі РґРµР»Р°РµС‚ РЈР»СЊС‚СЂР° РєРёР»Р»]]---------------------
+					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", РѕРЅ РїСЂРёС€РµР» Р·Р° СЂР°РјРїР°РіРѕР№")
 				end
 				if InfoPlayer_3 == 5 then
-----------------[[Враг сделал Рампейдж]]---------------------
-					Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
+----------------[[Р’СЂР°Рі СЃРґРµР»Р°Р» Р Р°РјРїРµР№РґР¶]]---------------------
+					Engine.ExecuteCommand("say Р­С‚Рѕ СЂР°РјРїР°РіР° РІ РёСЃРїРѕР»РЅРµРЅРёРё "..HeroDataInfo[InfoPlayer_1][NickKey].." РЅР° "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", РїСЂРѕСЃС‚Рѕ Р»Р°Р№Рє")
 				end
 				if InfoPlayer_3 > 5 then
-----------------[[Враг продолжает убивать после рампаги]]---------------------
-					Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
+----------------[[Р’СЂР°Рі РїСЂРѕРґРѕР»Р¶Р°РµС‚ СѓР±РёРІР°С‚СЊ РїРѕСЃР»Рµ СЂР°РјРїР°РіРё]]---------------------
+					Engine.ExecuteCommand("say РћСЃС‚Р°РЅРѕРІРёС‚Рµ "..HeroDataInfo[InfoPlayer_1][NickKey]..", РѕРЅ РїСЂРѕСЃС‚Рѕ РµР±Р°РЅСѓС‚С‹Р№, СЃРґРµР»Р°Р» "..InfoPlayer_3.." РєРёР»РѕРІ РїРѕРґСЂСЏРґ")
 				end
 			end
 		end
