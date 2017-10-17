@@ -1,269 +1,267 @@
-﻿--Author: Kostya12rus
-local ZChatWar = {}
-ZChatWar.Font = Renderer.LoadFont("Tahoma", 20, Enum.FontWeight.EXTRABOLD)
-ZChatWar.optionEnable = Menu.AddOption({"Kostya12rus","Chat War"}, "Activate", "")
+﻿local Chat_War = {}
+Chat_War.optionEnable = Menu.AddOption({"Kostya12rus","Chat War"}, "Activate", "")
 
-function ZChatWar.OnUpdate()
-	if not Menu.IsEnabled(ZChatWar.optionEnable) then return end
-	local myHero = Heroes.GetLocal()
-	if not myHero then return end
-	for i=1,NPCs.Count() do
-		NA_Unit = NPCs.Get(i)
-		if Entity.IsHero(NA_Unit) and Entity.IsPlayer(Entity.GetOwner(NA_Unit)) and not NPC.IsIllusion(NA_Unit) then
-			if HeroDataInfo[Hero.GetPlayerID(NA_Unit)] == nil then HeroDataInfo[Hero.GetPlayerID(NA_Unit)] = {} end
-			Herotable = HeroDataInfo[Hero.GetPlayerID(NA_Unit)]
-			Herotable[NickKey] = Player.GetName(Entity.GetOwner(NA_Unit))
-			Herotable[TeamKey] = Entity.IsSameTeam(myHero, NA_Unit)
-			Herotable[OwnerKey] = Entity.IsSameTeam(myHero, NA_Unit)
-			if Herotable[NamePlayer] == nil then 
-				for ConsoleName,DefName in pairs(HeroNameTable) do
-					if ConsoleName == NPC.GetUnitName(NA_Unit) then
-						Herotable[NamePlayer] = DefName 
-					end
-				end
-			end
-		end
-		if NPC.IsCourier(NA_Unit) then
-			if CourDataInfo[Entity.GetTeamNum(NA_Unit)] == nil then CourDataInfo[Entity.GetTeamNum(NA_Unit)] = {} end
-			CourTable = CourDataInfo[Entity.GetTeamNum(NA_Unit)]
-			CourTable[AliveKey] = Entity.IsAlive(NA_Unit)
-			if CourTable[DeadValue] == nil then CourTable[DeadValue] = 0 end
-			if CourTable[DeadTime] == nil then CourTable[DeadTime] = 0 end
-			if CourTable[DeadTimeFlae] == nil then CourTable[DeadTimeFlae] = 0 end
-			if CourTable[MyTeamCuer] == nil then CourTable[MyTeamCuer] = Entity.IsSameTeam(myHero, NA_Unit) end
-			if Courier.IsFlyingCourier(NA_Unit) then
-				if not Entity.IsAlive(NA_Unit) and (CourTable[DeadTimeFlae] <= GameRules.GetGameTime() or CourTable[DeadTimeFlae] < Courier.GetRespawnTime(NA_Unit)) and not Entity.IsDormant(NA_Unit) then
-					CourTable[DeadValue] = CourTable[DeadValue] + 1
-					CourTable[DeadTimeFlae] = Courier.GetRespawnTime(NA_Unit)+2
-					CouerDead = true
-				end
-			else
-				if not Entity.IsAlive(NA_Unit) and (CourTable[DeadTime] <= GameRules.GetGameTime() or CourTable[DeadTime]< Courier.GetRespawnTime(NA_Unit)) and not Entity.IsDormant(NA_Unit) then
-					CourTable[DeadValue] = CourTable[DeadValue] + 1
-					CourTable[DeadTime] = Courier.GetRespawnTime(NA_Unit)+2
-					CouerDead = true
-				end
-			end
-			CourTable[ItemKey] = ""
-			itemrecept = false
-			for j = 0, 9 do
-				local item = NPC.GetItemByIndex(NA_Unit, j)
-				if item and Entity.IsAbility(item) then
-					if Ability.GetName(item):find("item_recipe_") then
-						iteamname = Ability.GetName(item):gsub("item_recipe_","item_")
-						itemrecept = true
-					else
-						iteamname = Ability.GetName(item)
-					end
-					for iteamconsole,nameitem in pairs(ItemNameTable) do
-						if iteamname == iteamconsole then
-							if itemrecept then
-								CourTable[ItemKey] = CourTable[ItemKey] ..", рецепт ".. nameitem
-								itemrecept = false
-							else
-								CourTable[ItemKey] = CourTable[ItemKey] ..", ".. nameitem
-							end
-						end
-					end
-					CourTable[ItemTrig] = true
-				end
-				if j == 9 then
-					if CourTable[ItemKey] == "" then
-						CourTable[ItemTrig] = false
-					end
-				end
-			end
-			
-			if CouerDead then
-				if CourTable[MyTeamCuer] then
-					if CourTable[DeadValue] == 1 then
-						if CourTable[ItemTrig] then
+function Chat_War.OnUpdate()
+  if not Menu.IsEnabled(Chat_War.optionEnable) then return end
+  local myHero = Heroes.GetLocal()
+  if not myHero then return end
+  for i=1,NPCs.Count() do
+    NA_Unit = NPCs.Get(i)
+    if Entity.IsHero(NA_Unit) and Entity.IsPlayer(Entity.GetOwner(NA_Unit)) and not NPC.IsIllusion(NA_Unit) then
+      if HeroDataInfo[Hero.GetPlayerID(NA_Unit)] == nil then HeroDataInfo[Hero.GetPlayerID(NA_Unit)] = {} end
+      Herotable = HeroDataInfo[Hero.GetPlayerID(NA_Unit)]
+      Herotable[NickKey] = Player.GetName(Entity.GetOwner(NA_Unit))
+      Herotable[TeamKey] = Entity.IsSameTeam(myHero, NA_Unit)
+      Herotable[OwnerKey] = Entity.IsSameTeam(myHero, NA_Unit)
+      if Herotable[NamePlayer] == nil then 
+        for ConsoleName,DefName in pairs(HeroNameTable) do
+          if ConsoleName == NPC.GetUnitName(NA_Unit) then
+            Herotable[NamePlayer] = DefName 
+          end
+        end
+      end
+    end
+    if NPC.IsCourier(NA_Unit) then
+      if CourDataInfo[Entity.GetTeamNum(NA_Unit)] == nil then CourDataInfo[Entity.GetTeamNum(NA_Unit)] = {} end
+      CourTable = CourDataInfo[Entity.GetTeamNum(NA_Unit)]
+      CourTable[AliveKey] = Entity.IsAlive(NA_Unit)
+      if CourTable[DeadValue] == nil then CourTable[DeadValue] = 0 end
+      if CourTable[DeadTime] == nil then CourTable[DeadTime] = 0 end
+      if CourTable[DeadTimeFlae] == nil then CourTable[DeadTimeFlae] = 0 end
+      if CourTable[MyTeamCuer] == nil then CourTable[MyTeamCuer] = Entity.IsSameTeam(myHero, NA_Unit) end
+      if Courier.IsFlyingCourier(NA_Unit) then
+        if not Entity.IsAlive(NA_Unit) and (CourTable[DeadTimeFlae] <= GameRules.GetGameTime() or CourTable[DeadTimeFlae] < Courier.GetRespawnTime(NA_Unit)) and not Entity.IsDormant(NA_Unit) then
+          CourTable[DeadValue] = CourTable[DeadValue] + 1
+          CourTable[DeadTimeFlae] = Courier.GetRespawnTime(NA_Unit)+2
+          CouerDead = true
+        end
+      else
+        if not Entity.IsAlive(NA_Unit) and (CourTable[DeadTime] <= GameRules.GetGameTime() or CourTable[DeadTime]< Courier.GetRespawnTime(NA_Unit)) and not Entity.IsDormant(NA_Unit) then
+          CourTable[DeadValue] = CourTable[DeadValue] + 1
+          CourTable[DeadTime] = Courier.GetRespawnTime(NA_Unit)+2
+          CouerDead = true
+        end
+      end
+      CourTable[ItemKey] = ""
+      itemrecept = false
+      for j = 0, 9 do
+        local item = NPC.GetItemByIndex(NA_Unit, j)
+        if item and Entity.IsAbility(item) then
+          if Ability.GetName(item):find("item_recipe_") then
+            iteamname = Ability.GetName(item):gsub("item_recipe_","item_")
+            itemrecept = true
+          else
+            iteamname = Ability.GetName(item)
+          end
+          for iteamconsole,nameitem in pairs(ItemNameTable) do
+            if iteamname == iteamconsole then
+              if itemrecept then
+                CourTable[ItemKey] = CourTable[ItemKey] ..", рецепт ".. nameitem
+                itemrecept = false
+              else
+                CourTable[ItemKey] = CourTable[ItemKey] ..", ".. nameitem
+              end
+            end
+          end
+          CourTable[ItemTrig] = true
+        end
+        if j == 9 then
+          if CourTable[ItemKey] == "" then
+            CourTable[ItemTrig] = false
+          end
+        end
+      end
+      
+      if CouerDead then
+        if CourTable[MyTeamCuer] then
+          if CourTable[DeadValue] == 1 then
+            if CourTable[ItemTrig] then
 ----------------[[Твоя кура умерла с вещами]]---------------------
-							Engine.ExecuteCommand("say Зачем вы убили куру? Там были" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Зачем вы убили куру? Там были" .. CourTable[ItemKey])
+            else
 ----------------[[Твоя кура умерла]]---------------------
-							Engine.ExecuteCommand("say Мне кажестся или мы проебали куру?")
-						end
-					elseif CourTable[DeadValue] == 2 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Мне кажестся или мы проебали куру?")
+            end
+          elseif CourTable[DeadValue] == 2 then
+            if CourTable[ItemTrig] then
 ----------------[[Твоя кура умерла с вещами 2 раз]]---------------------
-							Engine.ExecuteCommand("say Сново кура умерла с нашими шмотками" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Сново кура умерла с нашими шмотками" .. CourTable[ItemKey])
+            else
 ----------------[[Твоя кура умерла 2 раз]]---------------------
-							Engine.ExecuteCommand("say Как у нас так получаеться проебывать куру?")
-						end
-					elseif CourTable[DeadValue] == 3 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Как у нас так получаеться проебывать куру?")
+            end
+          elseif CourTable[DeadValue] == 3 then
+            if CourTable[ItemTrig] then
 ----------------[[Твоя кура умерла с вещами 3 раз]]---------------------
-							Engine.ExecuteCommand("say Он сливает куру когда она несет" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Он сливает куру когда она несет" .. CourTable[ItemKey])
+            else
 ----------------[[Твоя кура умерла 3 раз]]---------------------
-							Engine.ExecuteCommand("say Кажеться пора кидать репорт, он ещё раз слил куру")
-						end
-					elseif CourTable[DeadValue] >= 4 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Кажеться пора кидать репорт, он ещё раз слил куру")
+            end
+          elseif CourTable[DeadValue] >= 4 then
+            if CourTable[ItemTrig] then
 ----------------[[Твоя кура умерла с вещами 4 раз]]---------------------
-							Engine.ExecuteCommand("say Пиздец.. В куре были" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Пиздец.. В куре были" .. CourTable[ItemKey])
+            else
 ----------------[[Твоя кура умерла 4 раз]]---------------------
-							Engine.ExecuteCommand("say Блять, этот далбоеб просто фидит курами, репорт")
-						end
-					end
-				else
-					if CourTable[DeadValue] == 1 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Блять, этот далбоеб просто фидит курами, репорт")
+            end
+          end
+        else
+          if CourTable[DeadValue] == 1 then
+            if CourTable[ItemTrig] then
 ----------------[[Вражеская кура умерла с вещами]]---------------------
-							Engine.ExecuteCommand("say Кажеться кура умерла и кто то потерял" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Кажеться кура умерла и кто то потерял" .. CourTable[ItemKey])
+            else
 ----------------[[Вражеская кура умерла]]---------------------
-							Engine.ExecuteCommand("say Научитесь управлять курой")
-						end
-					elseif CourTable[DeadValue] == 2 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Научитесь управлять курой")
+            end
+          elseif CourTable[DeadValue] == 2 then
+            if CourTable[ItemTrig] then
 ----------------[[Вражеская кура умерла с вещами 2 раз]]---------------------
-							Engine.ExecuteCommand("say Ваша кура умерла с" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Ваша кура умерла с" .. CourTable[ItemKey])
+            else
 ----------------[[Вражеская кура умерла 2 раз]]---------------------
-							Engine.ExecuteCommand("say Вы заметили, что у вас кура сдохла?")
-						end
-					elseif CourTable[DeadValue] == 3 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Вы заметили, что у вас кура сдохла?")
+            end
+          elseif CourTable[DeadValue] == 3 then
+            if CourTable[ItemTrig] then
 ----------------[[Вражеская кура умерла с вещами 3 раз]]---------------------
-							Engine.ExecuteCommand("say Кура не донесла" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Кура не донесла" .. CourTable[ItemKey])
+            else
 ----------------[[Вражеская кура умерла 3 раз]]---------------------
-							Engine.ExecuteCommand("say Скажите куре 'пока на 3 минуты'")
-						end
-					elseif CourTable[DeadValue] >= 4 then
-						if CourTable[ItemTrig] then
+              Engine.ExecuteCommand("say Скажите куре 'пока на 3 минуты'")
+            end
+          elseif CourTable[DeadValue] >= 4 then
+            if CourTable[ItemTrig] then
 ----------------[[Вражеская кура умерла с вещами 4 раз]]---------------------
-							Engine.ExecuteCommand("say Вы что фидить начали? Хоть выложите" .. CourTable[ItemKey])
-						else
+              Engine.ExecuteCommand("say Вы что фидить начали? Хоть выложите" .. CourTable[ItemKey])
+            else
 ----------------[[Вражеская кура умерла 4 раз]]---------------------
-							Engine.ExecuteCommand("say Ещё больше курьеров ... ")
-						end
-					end
-				end
-				CouerDead = false
-			end
-		end
-	end
+              Engine.ExecuteCommand("say Ещё больше курьеров ... ")
+            end
+          end
+        end
+        CouerDead = false
+      end
+    end
+  end
 end
 
-function ZChatWar.OnChatEvent(chatEvent)
-	InfoPlayer_1 = chatEvent.players[1]
-	InfoPlayer_2 = chatEvent.players[2]
-	InfoPlayer_3 = chatEvent.players[3]
-	InfoPlayer_4 = chatEvent.players[4]
-	InfoPlayer_5 = chatEvent.players[5]
-	if chatEvent.type == 5 then	
-		if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
+function Chat_War.OnChatEvent(chatEvent)
+  InfoPlayer_1 = chatEvent.players[1]
+  InfoPlayer_2 = chatEvent.players[2]
+  InfoPlayer_3 = chatEvent.players[3]
+  InfoPlayer_4 = chatEvent.players[4]
+  InfoPlayer_5 = chatEvent.players[5]
+  if chatEvent.type == 5 then  
+    if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
 ----------------[[Твой герой делает фб]]---------------------
-			Engine.ExecuteCommand("say Да я охуеннен, это бионгодлайк, мне лайк, бомж "..HeroDataInfo[InfoPlayer_2][NickKey])
-		end
-		if HeroDataInfo[InfoPlayer_2][NickKey] == Player.GetName(Players.GetLocal()) then
+      Engine.ExecuteCommand("say Да я охуеннен, это бионгодлайк, мне лайк, бомж "..HeroDataInfo[InfoPlayer_2][NickKey])
+    end
+    if HeroDataInfo[InfoPlayer_2][NickKey] == Player.GetName(Players.GetLocal()) then
 ----------------[[Твой герой умирает на ФБ]]---------------------
-			Engine.ExecuteCommand("say Ну вообще пиздато ноль хелпы. "..HeroDataInfo[InfoPlayer_1][NickKey]..", ты вообще черт ебучий")
-		end
-		if HeroDataInfo[InfoPlayer_2][NickKey] ~= Player.GetName(Players.GetLocal()) and HeroDataInfo[InfoPlayer_1][NickKey] ~= Player.GetName(Players.GetLocal()) then
-			if not HeroDataInfo[InfoPlayer_1][TeamKey] then
+      Engine.ExecuteCommand("say Ну вообще пиздато ноль хелпы. "..HeroDataInfo[InfoPlayer_1][NickKey]..", ты вообще черт ебучий")
+    end
+    if HeroDataInfo[InfoPlayer_2][NickKey] ~= Player.GetName(Players.GetLocal()) and HeroDataInfo[InfoPlayer_1][NickKey] ~= Player.GetName(Players.GetLocal()) then
+      if not HeroDataInfo[InfoPlayer_1][TeamKey] then
 ----------------[[Союзник умер на ФБ]]---------------------
-				Engine.ExecuteCommand("say Ой "..HeroDataInfo[InfoPlayer_2][NickKey].." даун. Давайте его зарепортим, чтобы он больше ФБ не отдавал!!!")
-			else
+        Engine.ExecuteCommand("say Ой "..HeroDataInfo[InfoPlayer_2][NickKey].." даун. Давайте его зарепортим, чтобы он больше ФБ не отдавал!!!")
+      else
 ----------------[[Твой союзник делает фб]]---------------------
-				Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey].." красава, пиздато ссыграл")
-			end
-		end
-	end	
-	if chatEvent.type == 6 then
-		if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
-			if InfoPlayer_3 == 2 then
+        Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey].." красава, пиздато ссыграл")
+      end
+    end
+  end  
+  if chatEvent.type == 6 then
+    if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
+      if InfoPlayer_3 == 2 then
 ----------------[[Ты сделал дабл килл]]---------------------
-				Chat.Say(AllChat,HeroDataInfo[InfoPlayer_4][NickKey].." его вырубил , другого для прикола вырубил")
-			end
-			if InfoPlayer_3 == 3 then
+        Chat.Say(AllChat,HeroDataInfo[InfoPlayer_4][NickKey].." его вырубил , другого для прикола вырубил")
+      end
+      if InfoPlayer_3 == 3 then
 ----------------[[Твой триплкилл]]---------------------
-				Chat.Say(AllChat,"ЕЕЕЕ BOY, да я просто кибер катлет")
-			end
-			if InfoPlayer_3 == 4 then
+        Chat.Say(AllChat,"ЕЕЕЕ BOY, да я просто кибер катлет")
+      end
+      if InfoPlayer_3 == 4 then
 ----------------[[Твой ультра килл]]---------------------
-				Chat.Say(AllChat,"Сосочки затвердели, давайте рампагу")
-			end
-			if InfoPlayer_3 == 5 then
+        Chat.Say(AllChat,"Сосочки затвердели, давайте рампагу")
+      end
+      if InfoPlayer_3 == 5 then
 ----------------[[Твоя рампага]]---------------------
-				Chat.Say(AllChat,"Просто в нулину вас вынес, никчемные, труха")
-			end
-			if InfoPlayer_3 > 5 then
+        Chat.Say(AllChat,"Просто в нулину вас вынес, никчемные, труха")
+      end
+      if InfoPlayer_3 > 5 then
 ----------------[[Продолжение рампаги]]---------------------
-				Chat.Say(AllChat,"Давайте ещё больше, а то "..InfoPlayer_3.." киллов, это очень мало")
-			end
-		else
-			if HeroDataInfo[InfoPlayer_1][TeamKey] then
-				if InfoPlayer_3 == 2 then
+        Chat.Say(AllChat,"Давайте ещё больше, а то "..InfoPlayer_3.." киллов, это очень мало")
+      end
+    else
+      if HeroDataInfo[InfoPlayer_1][TeamKey] then
+        if InfoPlayer_3 == 2 then
 ----------------[[Союзник делает Дабл Килл]]---------------------
-					Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
-				end
-				if InfoPlayer_3 == 3 then
+          Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
+        end
+        if InfoPlayer_3 == 3 then
 ----------------[[Союзник делает Трипл Килл]]---------------------
-					Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
-				end
-				if InfoPlayer_3 == 4 then
+          Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
+        end
+        if InfoPlayer_3 == 4 then
 ----------------[[Союзник делает Ультра килл]]---------------------
-					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
-				end
-				if InfoPlayer_3 == 5 then
+          Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
+        end
+        if InfoPlayer_3 == 5 then
 ----------------[[Союзник делает Рампагу]]---------------------
-					Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
-				end
-				if InfoPlayer_3 > 5 then
+          Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
+        end
+        if InfoPlayer_3 > 5 then
 ----------------[[Союзник убивает больше рампаги]]---------------------
-					Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
-				end
-			else
-				if InfoPlayer_3 == 2 then
+          Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
+        end
+      else
+        if InfoPlayer_3 == 2 then
 ----------------[[Враг делает Дабл Килл]]---------------------
-					Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
-				end
-				if InfoPlayer_3 == 3 then
+          Engine.ExecuteCommand("say Красавчик "..HeroDataInfo[InfoPlayer_1][NickKey]..", сделал ДаблКил")
+        end
+        if InfoPlayer_3 == 3 then
 ----------------[[Враг делает Трипл Килл]]---------------------
-					Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
-				end
-				if InfoPlayer_3 == 4 then
+          Engine.ExecuteCommand("say Это трипл килл в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey])
+        end
+        if InfoPlayer_3 == 4 then
 ----------------[[Враг делает Ультра килл]]---------------------
-					Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
-				end
-				if InfoPlayer_3 == 5 then
+          Engine.ExecuteCommand("say "..HeroDataInfo[InfoPlayer_1][NickKey]..", он пришел за рампагой")
+        end
+        if InfoPlayer_3 == 5 then
 ----------------[[Враг сделал Рампейдж]]---------------------
-					Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
-				end
-				if InfoPlayer_3 > 5 then
+          Engine.ExecuteCommand("say Это рампага в исполнении "..HeroDataInfo[InfoPlayer_1][NickKey].." на "..HeroDataInfo[InfoPlayer_1][NamePlayer]..", просто лайк")
+        end
+        if InfoPlayer_3 > 5 then
 ----------------[[Враг продолжает убивать после рампаги]]---------------------
-					Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
-				end
-			end
-		end
-	end
+          Engine.ExecuteCommand("say Остановите "..HeroDataInfo[InfoPlayer_1][NickKey]..", он просто ебанутый, сделал "..InfoPlayer_3.." килов подряд")
+        end
+      end
+    end
+  end
 end
 
-function ZChatWar.init()
-	HeroDataInfo = {}
-	NickKey = 1
-	TeamKey = 2
-	NamePlayer = 3
-	OwnerKey = 4
-	-------------------
-	CourDataInfo = {}
-	AliveKey = 12
-	ItemKey = 13
-	ItemTrig = 14
-	DeadValue = 15
-	DeadTime = 16
-	DeadTimeFlae = 17
-	MyTeamCuer = 18
-	-------------------
-	AllChat = "DOTAChannelType_GameAll"
-	CouerDead = false
-	HeroNameTable = {
+function Chat_War.init()
+  HeroDataInfo = {}
+  NickKey = 1
+  TeamKey = 2
+  NamePlayer = 3
+  OwnerKey = 4
+  -------------------
+  CourDataInfo = {}
+  AliveKey = 12
+  ItemKey = 13
+  ItemTrig = 14
+  DeadValue = 15
+  DeadTime = 16
+  DeadTimeFlae = 17
+  MyTeamCuer = 18
+  -------------------
+  AllChat = "DOTAChannelType_GameAll"
+  CouerDead = false
+  HeroNameTable = {
  npc_dota_hero_abaddon = "Abaddon"
 ,npc_dota_hero_abyssal_underlord = "Abyssal Underlord"
 ,npc_dota_hero_alchemist = "Alchemist"
@@ -378,7 +376,7 @@ function ZChatWar.init()
 ,npc_dota_hero_witch_doctor = "Witch Doctor"
 ,npc_dota_hero_zuus = "Zeus"
 }
-	ItemNameTable = 
+  ItemNameTable = 
 {
  item_abyssal_blade = "Abyssal Blade"
 ,item_aegis = "Aegis of the Immortal"
@@ -547,11 +545,11 @@ function ZChatWar.init()
 }
 end
 
-function ZChatWar.OnGameStart()
-  ZChatWar.init()
+function Chat_War.OnGameStart()
+  Chat_War.init()
 end
-function ZChatWar.OnGameEnd()
-  ZChatWar.init()
+function Chat_War.OnGameEnd()
+  Chat_War.init()
 end
-ZChatWar.init()
-return ZChatWar
+Chat_War.init()
+return Chat_War
