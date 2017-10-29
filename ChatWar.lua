@@ -1,4 +1,4 @@
-﻿local ZChatWar = {}
+local ZChatWar = {}
 ZChatWar.optionEnable = Menu.AddOption({"Kostya12rus","Chat War"}, "Activate", "")
 
 --[[
