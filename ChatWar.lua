@@ -26,6 +26,21 @@ fb_i_killed = {
 <ITEM_COURER>      - Пишет какие предметы нес курьер
 ]]--
 
+--------------Leave Player-----------
+--[[
+<NICK_LEAVE>		- Ник игрока который вышел
+<HERO_NAME_LEAVE>   - Герой игрока который вышел
+]]--
+leave_teamate = {
+	 "Давайте подожем <NICK_LEAVE> он нам игру сделает"
+	,"Жмем все паузу, <NICK_LEAVE> уже заходит"
+}
+leave_enemy = {
+	 "Пока <NICK_LEAVE>, ты все равно был никчемный"
+	,"<NICK_LEAVE> выходи и не возвращайся"
+	,"<NICK_LEAVE> пока ебаная труха"
+	,"Ваш друг ливнул, ну и хуй с ним"
+}
 --------------First blood---------------
 fb_i_killed = {
 	 "Да я охуеннен, это бионгодлайк, мне лайк, бомж <NICK_DEAD>"
@@ -206,6 +221,13 @@ function ZChatWar.OnChatEvent(chatEvent)
 	InfoPlayer_3 = chatEvent.players[3]
 	InfoPlayer_4 = chatEvent.players[4]
 	InfoPlayer_5 = chatEvent.players[5]
+	if chatEvent.type == 15 and GameRules.GetGameState() ~= 6 then
+		if Entity.IsSameTeam(HeroDataInfo[InfoPlayer_1][OwnerKey],Heroes.GetLocal()) then
+			Chat.Say(AllChat,leave_teamate[math.random(1,#leave_teamate)]:gsub("<NICK_LEAVE>",""..HeroDataInfo[InfoPlayer_1][NickKey]..""):gsub("<HERO_NAME_LEAVE>",""..HeroDataInfo[InfoPlayer_1][NamePlayer]..""))
+		else 
+			Chat.Say(AllChat,leave_enemy[math.random(1,#leave_enemy)]:gsub("<NICK_LEAVE>",""..HeroDataInfo[InfoPlayer_1][NickKey]..""):gsub("<HERO_NAME_LEAVE>",""..HeroDataInfo[InfoPlayer_1][NamePlayer]..""))
+		end
+	end
 	if chatEvent.type == 5 then	
 		if HeroDataInfo[InfoPlayer_1][NickKey] == Player.GetName(Players.GetLocal()) then
 			Chat.Say(AllChat,fb_i_killed[math.random(1,#fb_i_killed)]:gsub("<NICK_DEAD>",""..HeroDataInfo[InfoPlayer_2][NickKey]..""):gsub("<HERO_NAME_DEAD>",""..HeroDataInfo[InfoPlayer_2][NamePlayer]..""):gsub("<NICK_KILLER>",""..HeroDataInfo[InfoPlayer_1][NickKey]..""):gsub("<HERO_NAME_KILLER>",""..HeroDataInfo[InfoPlayer_1][NamePlayer]..""))
@@ -408,6 +430,8 @@ function ZChatWar.init()
 ,npc_dota_hero_wisp = "Io"
 ,npc_dota_hero_witch_doctor = "Witch Doctor"
 ,npc_dota_hero_zuus = "Zeus"
+,npc_dota_hero_dark_willow = "Dark Willow"
+,npc_dota_hero_pangolier = "Pangolier"
 }
 	ItemNameTable = 
 {
@@ -574,6 +598,11 @@ function ZChatWar.init()
 ,item_ward_sentry = "Sentry Ward"
 ,item_wind_lace = "Wind Lace"
 ,item_wraith_band = "Wraith Band"
+,item_spirit_vassel = "Spirit Vassel"
+,item_nullifier = "Nullifier"
+,item_combo_breaker = "Aeon Disk"
+,item_trident = "Kaya"
+,item_meteor_hammer = "Meteor Hammer"
 ,item_yasha = "Yasha"
 }
 end
