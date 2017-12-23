@@ -206,15 +206,15 @@ function Frostif.OnDraw()
 		elseif NPC.GetUnitName(myHero) == "npc_dota_hero_templar_assassin" then
 			gase = NPC.GetAbility(Heroes.GetLocal(),"refraction_lua") 
 			if templartick <= GameRules.GetGameTime() then
-				if Frostif.TemplarCast() then
-					if not NPC.HasModifier(myHero,"modifier_refraction_lua") then
-						Ability.Toggle(gase)
-					end	
-				else
-					if NPC.HasModifier(myHero,"modifier_refraction_lua") then
-						Ability.Toggle(gase)
-					end
-				end
+				-- if Frostif.TemplarCast() then
+					-- if not NPC.HasModifier(myHero,"modifier_refraction_lua") then
+						-- Ability.Toggle(gase)
+					-- end	
+				-- else
+					-- if NPC.HasModifier(myHero,"modifier_refraction_lua") then
+						-- Ability.Toggle(gase)
+					-- end
+				-- end
 				templartick = GameRules.GetGameTime() + 0.1
 			end
 		elseif NPC.GetUnitName(myHero) == "npc_dota_hero_drow_ranger" then
