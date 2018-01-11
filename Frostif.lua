@@ -74,13 +74,7 @@ function Frostif.OnDraw()
 		end
 	end
 	
-	for index,artic in pairs(partikle) do
-		--[[
-		artic[1] название
-		artic[2] время
-		artic[3] место старта
-		artic[4] место конца\ радиус
-		]]--		
+	for index,artic in pairs(partikle) do		
 		if artic[2] then
 			if artic[2] + 5 <= GameRules.GetGameTime() then
 				partikle[index] = nil
@@ -121,7 +115,6 @@ function Frostif.OnDraw()
 			local distance = vector:Length2D()
 			local x1, y1 , worldVis= Renderer.WorldToScreen(UnitPos)
 			if worldVis then
-				--Renderer.DrawText(Frostif.fontNps, x1-100, y1, NPC.GetUnitName(unitNA), 1)
 				if NPC.GetUnitName(unitNA) == "techies_game_remote_mine" then
 					Renderer.SetDrawColor(255,0,0,255)
 					Frostif.DrawCircle(UnitPos, 4*math.floor(100-Entity.GetHealth(unitNA)))
@@ -231,33 +224,18 @@ function Frostif.OnDraw()
 			end
 		end
 	end
-	
 	Renderer.SetDrawColor(255,255,255,255)
-	-- yposs = 120 
-	-- for index,modifer in pairs(NPC.GetModifiers(myHero)) do
-		-- Renderer.DrawText(Frostif.fontNps, 800, yposs, Modifier.GetName(modifer).."|"..math.floor(Modifier.GetDieTime(modifer) - GameRules.GetGameTime()+1), 1)
-		-- yposs = yposs + 12
-	-- end
-	-- ypos = 120
-	-- for index,ability in ipairs(Abilities.GetAll()) do
-		-- if not Ability.IsHidden(ability) and NPC.HasAbility(myHero,Ability.GetName(ability)) then
-			-- Renderer.DrawText(Frostif.fontNps, 500, ypos, Ability.GetName(ability), 1)
-			-- ypos = ypos + 12
-		-- end
-	-- end
-	 --[[ -- pudge wars custom_pudge_meat_hook -- teches mine summo place_propulsion_mine_lua detonate_propulsion_mine_lua -- furion maining  furion_teleport_lua -- enchanters dmg impetus_lua -- puck ogre war custom_puck_phase_shift -- sniper zoombbe  sniper_ground_shot_lua -- morg war custom_nether_swap -- wiwer speed shakuchi_lua -- drow aroow drow_shoot_arrow_lua -- Chain Frost Tag conjure_image_lua]]--
 end
 
 function Frostif.TemplarCast()
 	local mindist = false
-	
 	if projectiless then
 		for index,key in pairs(projectiless) do
 			local t = GameRules.GetGameTime() - key[3]
 			local curPos = key[1] + key[2]:Scaled(t)
 			local dist = curPos:Distance(Entity.GetAbsOrigin(Heroes.GetLocal())):Length2D()
 			if dist <= 200 then
-				local mindist = true
+				mindist = true
 			end		
 			if key[3]+10 <= GameRules.GetGameTime() then
 				projectiless[index] = nil
