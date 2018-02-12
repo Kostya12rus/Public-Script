@@ -24,19 +24,32 @@ function CritAttack.OnUnitAnimation(animation)
 	end
 end
 
+function CritAttack.OnPrepareUnitOrders(orders)
+	if orders.order == 4 then
+		target = orders.target
+	elseif orders.order == 3 then
+		
+	else
+		target = nil
+	end
+	return true
+end
+
 function CritAttack.OnUpdate()
 	if not Menu.IsEnabled(CritAttack.optionEnable) then return end
 	local myHero = Heroes.GetLocal()
 	if not myHero then return end
 	if Menu.IsKeyDown(CritAttack.key) then
-		target = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
+		--target = Input.GetNearestHeroToCursor(Entity.GetTeamNum(myHero), Enum.TeamType.TEAM_ENEMY)
 		if target then
-			if timer <= GameRules.GetGameTime() then
-				Player.AttackTarget(Players.GetLocal(),myHero,target)
-				if NPC.GetAttackTime(myHero)/2.5 < 0.3 then
-					timer = GameRules.GetGameTime() + 0.25
-				else
-					timer = GameRules.GetGameTime() + NPC.GetAttackTime(myHero)/2.5
+			if Entity.IsAlive(target) then
+				if timer <= GameRules.GetGameTime() then
+					Player.AttackTarget(Players.GetLocal(),myHero,target)
+					if NPC.GetAttackTime(myHero)/2.5 < 0.3 then
+						timer = GameRules.GetGameTime() + 0.25
+					else
+						timer = GameRules.GetGameTime() + NPC.GetAttackTime(myHero)/2.3
+					end
 				end
 			end
 		end
