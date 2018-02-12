@@ -43,13 +43,6 @@ function CritAttack.OnUpdate()
 	end
 end
 
-function CritAttack.OnGameStart()
-	CritAttack.init()
-end
-function CritAttack.OnGameEnd()
-	CritAttack.init()
-end
-
 function CritAttack.init()
 	attackcrit = false
 	target = nil
@@ -74,6 +67,12 @@ function CritAttack.init()
 	,"attack"
 	,"attack2"
 	}
+end
+function CritAttack.OnGameStart()
+	CritAttack.init()
+end
+function CritAttack.OnGameEnd()
+	CritAttack.init()
 end
 CritAttack.init()
 
