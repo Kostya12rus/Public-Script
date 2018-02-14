@@ -42,7 +42,7 @@ function CritAttack.OnUpdate()
 				if timer <= GameRules.GetGameTime() then
 					Player.AttackTarget(Players.GetLocal(),myHero,target)
 					if NPC.GetAttackTime(myHero)/2.5 < 0.3 then
-						timer = GameRules.GetGameTime() + 0.25
+						timer = GameRules.GetGameTime() + 0.3
 					else
 						timer = GameRules.GetGameTime() + NPC.GetAttackTime(myHero)/2.3
 					end
