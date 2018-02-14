@@ -8,15 +8,10 @@ function CritAttack.OnUnitAnimation(animation)
 	local myHero = Heroes.GetLocal()
 	if not myHero then return end
 	if animation.unit == myHero then
-		for _,j in pairs(critattak) do
-			if j == animation.sequenceName then
-				timer = GameRules.GetGameTime() + NPC.GetAttackTime(myHero)/2
-			end
-		end
-		for _,k in pairs(attacanim) do
-			if k == animation.sequenceName then
-				Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_STOP, myHero, Vector(0,0,0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY)
-			end
+		if animation.activity == 1505 then
+			timer = GameRules.GetGameTime() + animation.castpoint
+		elseif animation.activity == 1503 then
+			Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_STOP, myHero, Vector(0,0,0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY)
 		end
 	end
 end
@@ -55,25 +50,6 @@ end
 function CritAttack.init()
 	target = nil
 	timer = 0
-	critattak = {
-	 "phantom_assassin_attack_crit_anim"
-	,"attack_crit_anim"
-	,"attack_crit_alt_anim"
-	}
-	attacanim = {
-	"attack01_fast"
-	,"attack02_fast"
-	,"attack01_faster"
-	,"attack02_faster"
-	,"phantom_assassin_attack_anim"
-	,"phantom_assassin_attack_alt1_anim"
-	,"attack3_anim"
-	,"attack2_anim"
-	,"attack_anim"
-	,"attack_alt1_anim"
-	,"attack"
-	,"attack2"
-	}
 end
 function CritAttack.OnGameStart()
 	CritAttack.init()
