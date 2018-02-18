@@ -1,18 +1,31 @@
 local AquilaMacroGame = {}
 AquilaMacroGame.optionEnable = Menu.AddOption({"Utility", "Aquila Macro Game"}, "Activation", "")
 
+function AquilaMacroGame.OnPrepareUnitOrders(orders)
+	if orders.ability then
+		if Ability.GetName(orders.ability) == "item_ring_of_aquila" then
+		  aquila_triger = not aquila_triger
+		end
+		if Ability.GetName(orders.ability) == "item_ring_of_basilius" then
+			basilius_triger = not basilius_triger
+		end
+	end
+	return true
+end
+
 function AquilaMacroGame.OnUpdate()
   if not Menu.IsEnabled(AquilaMacroGame.optionEnable) then return end
   local myHero = Heroes.GetLocal()
   if not myHero then return end
   if timer <= GameRules.GetGameTime() then
-    if NPC.HasItem(myHero,"item_ring_of_aquila") then
-      ring = NPC.GetItem(myHero,"item_ring_of_aquila")
-      AquilaMacroGame.RingGame(ring)
-    elseif NPC.HasItem(myHero,"item_ring_of_basilius") then
+    if NPC.HasItem(myHero,"item_ring_of_basilius") and basilius_triger then
       ring = NPC.GetItem(myHero,"item_ring_of_basilius")
       AquilaMacroGame.RingGame(ring)
     end
+    if NPC.HasItem(myHero,"item_ring_of_aquila") and aquila_triger then
+      ring = NPC.GetItem(myHero,"item_ring_of_aquila")
+      AquilaMacroGame.RingGame(ring)
+	end
   end
 end
 
@@ -50,6 +63,8 @@ end
 function AquilaMacroGame.init()
   ring = nil
   timer = 0
+  aquila_triger = true
+  basilius_triger = true
 end
 
 function AquilaMacroGame.OnGameStart()
