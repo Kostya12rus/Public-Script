@@ -1,17 +1,16 @@
 local AquilaMacroGame = {}
 AquilaMacroGame.optionEnable = Menu.AddOption({"Utility", "Aquila Macro Game"}, "Activation", "")
-AquilaMacroGame.Font = Renderer.LoadFont("Tahoma", 14, Enum.FontWeight.EXTRABOLD)
 
 function AquilaMacroGame.OnPrepareUnitOrders(orders)
-	if orders.ability and orders.order == 9 then
-		if Ability.GetName(orders.ability) == "item_ring_of_aquila" then
-		  aquila_triger = not aquila_triger
-		end
-		if Ability.GetName(orders.ability) == "item_ring_of_basilius" then
-			basilius_triger = not basilius_triger
-		end
-	end
-	return true
+  if orders.ability and orders.order == 9 then
+    if Ability.GetName(orders.ability) == "item_ring_of_aquila" then
+      aquila_triger = not aquila_triger
+    end
+    if Ability.GetName(orders.ability) == "item_ring_of_basilius" then
+      basilius_triger = not basilius_triger
+    end
+  end
+  return true
 end
 
 function AquilaMacroGame.OnUpdate()
