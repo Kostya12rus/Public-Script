@@ -49,9 +49,10 @@ end
 function KunkaStaker.init()
   sizeBar = 32
   needStaker = false
-  anchentpoint = {
-  {Vector(69,-1860,384),false},
-  {Vector(3911,-575,256),false}}
+  anchentpoint = { -- Можно добавлять другие споты
+    {Vector(69,-1860,384),false},
+    {Vector(3911,-575,256),false}
+  }
 end
 
 function KunkaStaker.OnGameStart()
