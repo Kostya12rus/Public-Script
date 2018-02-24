@@ -6,12 +6,13 @@ function KunkaStaker.OnUpdate()
   local myHero = Heroes.GetLocal()
   if not myHero then return end
   local torrent = NPC.GetAbility(myHero, "kunkka_torrent")
-  if torrent then
+  if torrent and GameRules.GetGameState() == 5 then
     needStaker = true
     if Ability.IsReady(torrent) then
       local rangetorrent = Ability.GetCastRange(torrent)
       local second = (GameRules.GetGameTime()-GameRules.GetGameStartTime())%60
-      if second >= 60-1.6-1 then
+	  local ping = NetChannel.GetAvgLatency(Enum.Flow.MAX_FLOWS)
+      if second >= 60-2.6-ping then
         for _,camp in pairs(anchentpoint) do
           if camp[2] and NPC.IsPositionInRange(myHero,camp[1],rangetorrent) then
             Ability.CastPosition(torrent,camp[1])
@@ -50,7 +51,7 @@ function KunkaStaker.init()
   needStaker = false
   anchentpoint = {
   {Vector(69,-1860,384),false},
-  {Vector(3873,-577,256),false}}
+  {Vector(3911,-575,256),false}}
 end
 
 function KunkaStaker.OnGameStart()
