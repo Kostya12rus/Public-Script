@@ -11,7 +11,7 @@ function KunkaStaker.OnUpdate()
     if Ability.IsReady(torrent) then
       local rangetorrent = Ability.GetCastRange(torrent)
       local second = (GameRules.GetGameTime()-GameRules.GetGameStartTime())%60
-	  local ping = NetChannel.GetAvgLatency(Enum.Flow.MAX_FLOWS)
+      local ping = NetChannel.GetAvgLatency(Enum.Flow.MAX_FLOWS)
       if second >= 60-2.6-ping then
         for _,camp in pairs(anchentpoint) do
           if camp[2] and NPC.IsPositionInRange(myHero,camp[1],rangetorrent) then
