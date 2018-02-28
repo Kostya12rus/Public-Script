@@ -43,13 +43,14 @@ function EconomPanel.OnDraw()
 		
 		sizeBarx = sizeamountx/2.5
 		sizeBary = sizeBarx*0.55
-		if not EconomPanel.Font2 then 
-			EconomPanel.Font2 = Renderer.LoadFont("Tahoma", sizeamountx*0.4, Enum.FontWeight.EXTRABOLD)
-		end
 		if settingactov then
 			Renderer.SetDrawColor(100,255,100,visibility)
 		else
 			Renderer.SetDrawColor(255,100,100,visibility)
+		end
+		
+		if not EconomPanel.Font then 
+			EconomPanel.Font = Renderer.LoadFont("Tahoma", math.ceil(sizeBary*0.75), Enum.FontWeight.EXTRABOLD)
 		end
 		Renderer.DrawImage(settingicon, math.ceil(xpos), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary))
 		if Input.IsCursorInRect(math.ceil(xpos),math.ceil(ypos-sizeBary), math.ceil(sizeBary),math.ceil(sizeBary)) then
@@ -126,10 +127,9 @@ function EconomPanel.OnDraw()
 					Renderer.DrawText(EconomPanel.Font, math.ceil(xpos-sizeBarx),math.ceil(ypos+sizeBary*i), size, 1)
 					if Input.IsCursorInRect(math.ceil(xpos-sizeBarx),math.ceil(ypos+sizeBary*i),math.ceil(sizeBarx-2),math.ceil(sizeBary)) then
 						if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
-							Config.WriteInt("EconomPanel", "sizeIcon", size)
-							EconomPanel.Font = nil
-							EconomPanel.Font2 = nil
+							EconomPanel.Font = Renderer.LoadFont("Tahoma", math.ceil((size/2.5)*0.55*0.75), Enum.FontWeight.EXTRABOLD)
 							setsize = false
+							Config.WriteInt("EconomPanel", "sizeIcon", size)
 						end
 					end
 				end
@@ -168,7 +168,13 @@ function EconomPanel.OnDraw()
 					if heroicon[NPC.GetUnitName(hero[1])] then
 						imageHandle = heroicon[NPC.GetUnitName(hero[1])]
 					else
-						imageHandle = Renderer.LoadImage(heroIconpath .. string.gsub(NPC.GetUnitName(hero[1]), "npc_dota_hero_", "") .. ".png")
+						if NPC.GetUnitName(hero[1]) == "npc_dota_hero_dark_willow" then
+							imageHandle = Renderer.LoadImage("resource/flash3/images/heroes/fairy.png")
+						elseif NPC.GetUnitName(hero[1]) == "npc_dota_hero_pangolier" then
+							imageHandle = Renderer.LoadImage("resource/flash3/images/heroes/selection/npc_dota_hero_pangolier.png")
+						else
+							imageHandle = Renderer.LoadImage(heroIconpath .. string.gsub(NPC.GetUnitName(hero[1]), "npc_dota_hero_", "") .. ".png")
+						end
 						heroicon[NPC.GetUnitName(hero[1])] = imageHandle
 					end
 					local prochent = hero[2]/(player[1][2]/100)/100
@@ -183,9 +189,6 @@ function EconomPanel.OnDraw()
 					Renderer.SetDrawColor(0,0,0,visibility)
 					Renderer.DrawOutlineRect(math.ceil(xpos),math.ceil(ypos),math.ceil(sizeamountx*prochent)+2,math.ceil(sizeBary))
 					Renderer.SetDrawColor(0,255,255,visibility)
-					if not EconomPanel.Font then 
-						EconomPanel.Font = Renderer.LoadFont("Tahoma", math.ceil(sizeBary*0.75), Enum.FontWeight.EXTRABOLD)
-					end
 					Renderer.DrawTextCenteredY(EconomPanel.Font, math.ceil(xpos + 1), math.ceil(ypos+sizeBary/2), hero[2], 1)
 					ypos = ypos + sizeBary
 					xpos = Config.ReadInt("EconomPanel", "xpos", 200)
