@@ -12,10 +12,20 @@ function EconomPanel.OnUpdate()
 			for j = 0,14 do
 				local item = NPC.GetItemByIndex(hero,j)
 				if item and Entity.IsAbility(item) and itemprice[Ability.GetName(item)] then
-					havemoney = havemoney + itemprice[Ability.GetName(item)]
+					if Ability.GetName(item) == "item_tango" then
+						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)]/3)
+					elseif Ability.GetName(item) == "item_dust" then
+						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)]/2)
+					elseif Ability.GetName(item) == "item_tpscroll" or Ability.GetName(item) == "item_ward_observer" or Ability.GetName(item) == "item_ward_sentry" or Ability.GetName(item) == "item_smoke_of_deceit" then
+						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)])
+					elseif Ability.GetName(item) == "item_ward_dispenser" and Item.GetCurrentCharges(item) > 1 then
+						havemoney = havemoney + (itemprice[Ability.GetName(item)]) + (Item.GetCurrentCharges(item)-1)*itemprice["item_ward_observer"]
+					else
+						havemoney = havemoney + itemprice[Ability.GetName(item)]
+					end
 				end
 			end
-			table.insert(player,{hero, havemoney})
+			table.insert(player,{hero, math.floor(havemoney)})
 		end
 	end
 	table.sort(player, function(a, b) return a[2] > b[2] end)
@@ -133,10 +143,13 @@ function EconomPanel.OnDraw()
 				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
 					movepanel = not movepanel 
 				end
+				moveicon = moveicon2
 			else
 				Renderer.SetDrawColor(255,0,0,visibility)
+				moveicon = moveicon1
 			end
 			Renderer.SetDrawColor(255,255,255,visibility)
+			
 			Renderer.DrawImage(moveicon, math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary)) then
 				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
@@ -201,7 +214,9 @@ function EconomPanel.init()
 	canDraw = false
 	player = {}
 	heroIconpath = "resource/flash3/images/heroes/"
-	moveicon = Renderer.LoadImage('resource/flash3/images/spellicons/rubick_empty1.png')
+	moveicon1 = Renderer.LoadImage('resource/cursor/source/cursor_spell_default.png')
+	moveicon2 = Renderer.LoadImage('resource/cursor/source/cursor_spell_illegal.png')
+	moveicon = moveicon1
 	movepanel = false
 	settingicon = Renderer.LoadImage('resource/flash3/images/heroes/selection/pip_baby.png')
 	settingactov = false
