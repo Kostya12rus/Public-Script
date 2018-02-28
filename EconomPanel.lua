@@ -8,7 +8,6 @@ function EconomPanel.OnUpdate()
 	player = {}
 	for i,hero in pairs(Heroes.GetAll()) do
 		if hero and EconomPanel.NeedAdd(hero) then
-			player[i] = {}
 			havemoney = 0
 			for j = 0,14 do
 				local item = NPC.GetItemByIndex(hero,j)
@@ -16,7 +15,7 @@ function EconomPanel.OnUpdate()
 					havemoney = havemoney + itemprice[Ability.GetName(item)]
 				end
 			end
-			player[i] = {hero, havemoney}
+			table.insert(player,{hero, havemoney})
 		end
 	end
 	table.sort(player, function(a, b) return a[2] > b[2] end)
@@ -96,10 +95,8 @@ function EconomPanel.OnDraw()
 				setsize = false
 				Config.WriteInt("EconomPanel", "closes", 1)
 			end
-			Renderer.SetDrawColor(255,0,0,visibility)
-			Renderer.DrawFilledRect(math.ceil(xpos+sizeBary*2),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			Renderer.SetDrawColor(255,255,255,visibility)
-			Renderer.DrawText(EconomPanel.Font2, math.ceil(xpos+sizeBary*2.1), math.ceil(ypos-sizeBary*1.65), "⇳", 1)
+			Renderer.DrawImage(setsizeicon, math.ceil(xpos+sizeBary*2),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos+sizeBary*2),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary)) then
 				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
 					setsize = not setsize 
@@ -139,9 +136,8 @@ function EconomPanel.OnDraw()
 			else
 				Renderer.SetDrawColor(255,0,0,visibility)
 			end
-			Renderer.DrawFilledRect(math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			Renderer.SetDrawColor(255,255,255,visibility)
-			Renderer.DrawTextCentered(EconomPanel.Font2, math.ceil(xpos-sizeBary/2.9), math.ceil(ypos-sizeBary/1.5), "⇔", 1)
+			Renderer.DrawImage(moveicon, math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary)) then
 				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
 					if not closes then
@@ -205,6 +201,7 @@ function EconomPanel.init()
 	canDraw = false
 	player = {}
 	heroIconpath = "resource/flash3/images/heroes/"
+	moveicon = Renderer.LoadImage('resource/flash3/images/spellicons/rubick_empty1.png')
 	movepanel = false
 	settingicon = Renderer.LoadImage('resource/flash3/images/heroes/selection/pip_baby.png')
 	settingactov = false
@@ -214,6 +211,7 @@ function EconomPanel.init()
 	vision = false
 	ringicon = Renderer.LoadImage('resource/flash3/images/heroes/selection/hero_quest.png')
 	ringmove = false
+	setsizeicon = Renderer.LoadImage('resource/flash3/images/spellicons/modifier_invulnerable.png')
 	setsize = false
 	
 	heroicon = {}
