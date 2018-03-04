@@ -1,5 +1,6 @@
 local EconomPanel = {}
 EconomPanel.optionEnable = Menu.AddOption({"Utility", "EconomPanel"}, "Activation", "")
+EconomPanel.KeySetting = Menu.AddKeyOption({"Utility", "EconomPanel"}, "Key for Setting", Enum.ButtonCode.BUTTON_CODE_NONE)
 
 function EconomPanel.OnUpdate()
 	if not Menu.IsEnabled(EconomPanel.optionEnable) then return end
@@ -16,7 +17,12 @@ function EconomPanel.OnUpdate()
 						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)]/3)
 					elseif Ability.GetName(item) == "item_dust" then
 						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)]/2)
-					elseif Ability.GetName(item) == "item_tpscroll" or Ability.GetName(item) == "item_ward_observer" or Ability.GetName(item) == "item_ward_sentry" or Ability.GetName(item) == "item_smoke_of_deceit" then
+					elseif 	Ability.GetName(item) == "item_tpscroll" or 
+							Ability.GetName(item) == "item_ward_observer" or 
+							Ability.GetName(item) == "item_ward_sentry" or 
+							Ability.GetName(item) == "item_clarity" or 
+							Ability.GetName(item) == "item_flask" or
+							Ability.GetName(item) == "item_smoke_of_deceit" then
 						havemoney = havemoney + Item.GetCurrentCharges(item)*(itemprice[Ability.GetName(item)])
 					elseif Ability.GetName(item) == "item_ward_dispenser" and Item.GetCurrentCharges(item) > 1 then
 						havemoney = havemoney + (itemprice[Ability.GetName(item)]) + (Item.GetCurrentCharges(item)-1)*itemprice["item_ward_observer"]
@@ -28,7 +34,7 @@ function EconomPanel.OnUpdate()
 			table.insert(player,{hero, math.floor(havemoney)})
 		end
 	end
-	table.sort(player, function(a, b) return a[2] > b[2] end)
+	table.sort(player, function(t1, t2) return t1[2] > t2[2] end)
 	if #player >= 2 then
 		canDraw = true
 	end
@@ -54,7 +60,7 @@ function EconomPanel.OnDraw()
 		end
 		Renderer.DrawImage(settingicon, math.ceil(xpos), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary))
 		if Input.IsCursorInRect(math.ceil(xpos),math.ceil(ypos-sizeBary), math.ceil(sizeBary),math.ceil(sizeBary)) then
-			if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+			if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 				settingactov = not settingactov 
 			end
 		end
@@ -62,7 +68,7 @@ function EconomPanel.OnDraw()
 			Renderer.SetDrawColor(255,255,255,visibility)
 			Renderer.DrawImage(visicon, math.ceil(xpos+sizeBary), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos+sizeBary), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary)) then
-				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+				if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 					vision = not vision 
 					if setsize and vision then
 						setsize = false
@@ -75,12 +81,12 @@ function EconomPanel.OnDraw()
 				Renderer.SetDrawColor(255,255,255,visibility)
 				Renderer.DrawImage(ringicon,math.ceil(xpos-sizeBary),math.ceil(ypos+((visibility-55)/200)*(sizeBary*9)), math.ceil(sizeBary), math.ceil(sizeBary))
 				if Input.IsCursorInRect(math.ceil(xpos-sizeBary),math.ceil(ypos),math.ceil(sizeBary),math.ceil(sizeBary*10)) then
-					if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+					if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 						ringmove = not ringmove 
 					end
 				end
 				if ringmove then
-					if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+					if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 						ringmove = false
 					end
 					local _,y1 = Input.GetCursorPos()
@@ -96,7 +102,7 @@ function EconomPanel.OnDraw()
 			end
 			Renderer.DrawImage(closeicon, math.ceil(xpos + sizeamountx + sizeBary*0.90), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos + sizeamountx + sizeBary*0.90), math.ceil(ypos-sizeBary), math.ceil(sizeBary), math.ceil(sizeBary)) then
-				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+				if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 					closes = not closes 
 					Config.WriteInt("EconomPanel", "closes", 0)
 				end
@@ -109,7 +115,7 @@ function EconomPanel.OnDraw()
 			Renderer.SetDrawColor(255,255,255,visibility)
 			Renderer.DrawImage(setsizeicon, math.ceil(xpos+sizeBary*2),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos+sizeBary*2),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary)) then
-				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+				if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 					setsize = not setsize 
 					if setsize and vision then
 						vision = false
@@ -126,7 +132,7 @@ function EconomPanel.OnDraw()
 					Renderer.SetDrawColor(255,255,255,visibility)
 					Renderer.DrawText(EconomPanel.Font, math.ceil(xpos-sizeBarx),math.ceil(ypos+sizeBary*i), size, 1)
 					if Input.IsCursorInRect(math.ceil(xpos-sizeBarx),math.ceil(ypos+sizeBary*i),math.ceil(sizeBarx-2),math.ceil(sizeBary)) then
-						if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+						if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 							EconomPanel.Font = Renderer.LoadFont("Tahoma", math.ceil((size/2.5)*0.55*0.75), Enum.FontWeight.EXTRABOLD)
 							setsize = false
 							Config.WriteInt("EconomPanel", "sizeIcon", size)
@@ -140,7 +146,7 @@ function EconomPanel.OnDraw()
 				xpos,ypos = Input.GetCursorPos()
 				Config.WriteInt("EconomPanel", "xpos", xpos)
 				Config.WriteInt("EconomPanel", "ypos", ypos)
-				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+				if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then
 					movepanel = not movepanel 
 				end
 				moveicon = moveicon2
@@ -152,7 +158,7 @@ function EconomPanel.OnDraw()
 			
 			Renderer.DrawImage(moveicon, math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary))
 			if Input.IsCursorInRect(math.ceil(xpos-sizeBary),math.ceil(ypos-sizeBary),math.ceil(sizeBary),math.ceil(sizeBary)) then
-				if Input.IsKeyDownOnce(Enum.ButtonCode.KEY_LCONTROL) then
+				if Menu.IsKeyDownOnce(EconomPanel.KeySetting) then 
 					if not closes then
 						movepanel = not movepanel 
 					end
@@ -244,7 +250,7 @@ function EconomPanel.init()
 	itemprice["item_blades_of_attack"] = 420 -- "Blades of Attack"
 	itemprice["item_blight_stone"] = 300 -- "Blight Stone"
 	itemprice["item_blink"] = 2250 -- "Blink Dagger"
-	itemprice["item_boots"] = 400 -- "Boots of Speed"
+	itemprice["item_boots"] = 500 -- "Boots of Speed"
 	itemprice["item_bottle"] = 650 -- "Bottle"
 	itemprice["item_broadsword"] = 1200 -- "Broadsword"
 	itemprice["item_chainmail"] = 550 -- "Chainmail"
