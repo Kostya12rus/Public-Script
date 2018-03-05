@@ -6,7 +6,7 @@ function EconomPanel.OnUpdate()
 	if not Menu.IsEnabled(EconomPanel.optionEnable) then return end
 	local myHero = Heroes.GetLocal()
 	if not myHero then return end
-	player = {}
+	EconomPanel.player = {}
 	for i,hero in pairs(Heroes.GetAll()) do
 		if hero and EconomPanel.NeedAdd(hero) then
 			havemoney = 0
@@ -31,11 +31,11 @@ function EconomPanel.OnUpdate()
 					end
 				end
 			end
-			table.insert(player,{hero, math.floor(havemoney)})
+			table.insert(EconomPanel.player,{hero, math.floor(havemoney)})
 		end
 	end
-	table.sort(player, function(t1, t2) return t1[2] > t2[2] end)
-	if #player >= 2 then
+	table.sort(EconomPanel.player, function(t1, t2) return t1[2] > t2[2] end)
+	if #EconomPanel.player >= 2 then
 		canDraw = true
 	end
 end
@@ -167,7 +167,7 @@ function EconomPanel.OnDraw()
 		end		
 		if not closes and Config.ReadInt("EconomPanel", "closes", 0) == 0 then
 			ypos = Config.ReadInt("EconomPanel", "ypos", 200)
-			for i,hero in pairs(player) do
+			for i,hero in pairs(EconomPanel.player) do
 				Renderer.SetDrawColor(255,255,255,visibility)
 				if hero[1] and Entity.IsPlayer(Entity.GetOwner(hero[1])) then
 					local imageHandle
@@ -183,7 +183,7 @@ function EconomPanel.OnDraw()
 						end
 						heroicon[NPC.GetUnitName(hero[1])] = imageHandle
 					end
-					local prochent = hero[2]/(player[1][2]/100)/100
+					local prochent = hero[2]/(EconomPanel.player[1][2]/100)/100
 					Renderer.DrawImage(imageHandle, math.ceil(xpos), math.ceil(ypos), math.ceil(sizeBarx), math.ceil(sizeBary))
 					xpos = xpos + sizeBarx
 					if Entity.IsSameTeam(Heroes.GetLocal(),hero[1]) then
@@ -199,7 +199,7 @@ function EconomPanel.OnDraw()
 					ypos = ypos + sizeBary
 					xpos = Config.ReadInt("EconomPanel", "xpos", 200)
 					if not hero[1] then
-						player[i] = nil
+						EconomPanel.player[i] = nil
 					end
 				end
 			end
@@ -209,7 +209,7 @@ function EconomPanel.OnDraw()
 end
 
 function EconomPanel.NeedAdd(npc)
-	for i,hero in pairs(player) do
+	for i,hero in pairs(EconomPanel.player) do
 		if Entity.IsPlayer(Entity.GetOwner(npc)) and Entity.IsPlayer(Entity.GetOwner(hero[1])) then
 			if hero and Player.GetPlayerData(Entity.GetOwner(hero[1])).steamid == Player.GetPlayerData(Entity.GetOwner(npc)).steamid then
 				return false
@@ -221,7 +221,7 @@ end
 
 function EconomPanel.init()
 	canDraw = false
-	player = {}
+	EconomPanel.player = {}
 	heroIconpath = "resource/flash3/images/heroes/"
 	moveicon1 = Renderer.LoadImage('resource/cursor/source/cursor_spell_default.png')
 	moveicon2 = Renderer.LoadImage('resource/cursor/source/cursor_spell_illegal.png')
