@@ -45,17 +45,17 @@ function cancerLancerBug.OnUpdate()
 	if Menu.IsKeyDown(cancerLancerBug.optionKey) and not NPC.HasModifier(myHero,"modifier_phantom_lancer_phantom_edge_boost") then
 		if not Ability.GetToggleState(abil) and faketarget and cancerLancerBug.timerOrder <= GameRules.GetGameTime() then
 			Ability.Toggle(abil)
-			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.05 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
+			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.02 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
 		end
 		if Ability.GetToggleState(abil) and faketarget and cancerLancerBug.timerOrder <= GameRules.GetGameTime() then
 			Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_ATTACK_TARGET, faketarget, Vector(0,0,0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY, myHero, false, true)
 			faketarget = nil
-			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.05 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
+			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.02 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
 		end
 		if not faketarget and Ability.GetToggleState(abil) and cancerLancerBug.timerOrder <= GameRules.GetGameTime() then
 			Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_ATTACK_TARGET, cancerLancerBug.targetFix, Vector(0,0,0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_HERO_ONLY, myHero, false, true)
 			Ability.Toggle(abil)
-			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.05 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
+			cancerLancerBug.timerOrder = GameRules.GetGameTime() + 0.02 + NetChannel.GetLatency(Enum.Flow.MAX_FLOWS)
 		end
 	end
 end
@@ -65,7 +65,7 @@ function cancerLancerBug.FindTargetForFakeRash(radius)
 	local maxhp = 0
 	local bestbpc = nil
 	for _,npc in pairs(entity) do
-		if npc and Entity.IsAlive(npc) and not Entity.IsDormant(npc) and not NPC.HasState(npc,Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
+		if npc and Entity.IsAlive(npc) and not Entity.IsDormant(npc) and not NPC.HasState(npc,Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) and not NPC.IsStructure(npc) and not Entity.IsHero(npc) then
 			if Entity.GetHealth(npc) >= maxhp then
 				maxhp = Entity.GetHealth(npc)
 				bestbpc = npc
