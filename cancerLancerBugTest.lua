@@ -33,9 +33,10 @@ function cancerLancerBug.OnUpdate()
 	local abil = NPC.GetAbility(myHero, "phantom_lancer_phantom_edge")
 	if not abil or not Ability.IsReady(abil) then return end
 	local distfind = Ability.GetLevelSpecialValueFor(abil,"max_distance")
-	if NPC.GetAbility(myHero, "special_bonus_unique_phantom_lancer") then
+	if NPC.GetAbility(myHero, "special_bonus_unique_phantom_lancer") and Ability.GetLevel(NPC.GetAbility(myHero, "special_bonus_unique_phantom_lancer")) ~= 0 then
 		distfind = distfind + 500
 	end
+	
 	cancerLancerBug.targetFix = cancerLancerBug.isSameTeamTable[cancerLancerBug.targetSelector]
 	
 	if not Menu.IsKeyDown(cancerLancerBug.optionKey) then
@@ -61,7 +62,7 @@ function cancerLancerBug.OnUpdate()
 end
 
 function cancerLancerBug.FindTargetForFakeRash(radius)
-	local entity = Entity.GetUnitsInRadius(Heroes.GetLocal(),radius,Enum.TeamType.TEAM_ENEMY)
+	local entity = Entity.GetUnitsInRadius(Heroes.GetLocal(),radius-25,Enum.TeamType.TEAM_ENEMY)
 	local maxhp = 0
 	local bestbpc = nil
 	for _,npc in pairs(entity) do
